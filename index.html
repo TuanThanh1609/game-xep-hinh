@@ -251,6 +251,11 @@ body {
   70%  { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
+@keyframes pieceFlash {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 201, 103, 0.8); }
+  40%  { box-shadow: 0 0 16px 6px rgba(255, 201, 103, 0.5); }
+  100% { box-shadow: none; }
+}
 @keyframes countdownPop {
   0%   { transform: scale(1.3); opacity: 0; }
   20%  { opacity: 1; }
@@ -299,6 +304,9 @@ body {
 }
 .puzzle-slot.filled {
   cursor: default;
+  /* Override ghost background so solid piece shows clearly */
+  background-color: transparent !important;
+  opacity: 1;
 }
 .puzzle-slot.target {
   outline: 2px dashed rgba(183,16,41,0.5);
@@ -1383,27 +1391,23 @@ function placePiece(pieceId, row, col) {
   const idx = row * GRID_SIZE + col;
   const slot = slots[idx];
 
+  // Clear ghost preview
+  slot.innerHTML = '';
+
+  // Set solid piece image directly on the slot via CSS background
   const puzzleDataURL = fullImage ? fullImage.toDataURL() : null;
   const cellPct = 100 / GRID_SIZE;
 
-  // Show full piece — replace ghost with solid image
-  slot.innerHTML = '';
-  slot.style.backgroundImage = '';
-  slot.style.backgroundColor = '';
-  slot.style.opacity = '1';
-  slot.style.borderRadius = '4px';
-
   if (puzzleDataURL) {
-    const div = document.createElement('div');
-    div.style.width = '100%';
-    div.style.height = '100%';
-    div.style.borderRadius = '4px';
-    div.style.backgroundImage = `url(${puzzleDataURL})`;
-    div.style.backgroundSize = `${GRID_SIZE * 100}%`;
-    div.style.backgroundPosition = `${col * cellPct}% ${row * cellPct}%`;
-    div.style.backgroundRepeat = 'no-repeat';
-    div.style.animation = 'pieceCorrect 400ms var(--spring-bounce)';
-    slot.appendChild(div);
+    slot.style.backgroundImage = `url(${puzzleDataURL})`;
+    slot.style.backgroundSize = `${GRID_SIZE * 100}%`;
+    slot.style.backgroundPosition = `${col * cellPct}% ${row * cellPct}%`;
+    slot.style.backgroundRepeat = 'no-repeat';
+    slot.style.backgroundColor = 'transparent';
+    slot.style.opacity = '1';
+    // Bounce + flash animation
+    slot.style.animation = 'pieceCorrect 400ms var(--spring-bounce), pieceFlash 600ms ease-out';
+    setTimeout(() => { slot.style.animation = ''; }, 600);
   }
 
   slot.classList.add('filled');
