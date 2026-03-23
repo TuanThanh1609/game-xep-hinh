@@ -1,0 +1,99 @@
+{
+  "name": "maycha_speed_jigsaw",
+  "tables": [
+    {
+      "table_name": "jigsaw_leads",
+      "description": "Lưu thông tin người chơi Speed Jigsaw (SĐT, kết quả, thời gian)",
+      "columns": [
+        { "column_name": "id",         "datatype": "ID",       "primary": true },
+        { "column_name": "phone",       "datatype": "varchar",   "length": 15,   "required": true },
+        { "column_name": "full_name",   "datatype": "varchar",   "length": 255 },
+        { "column_name": "source",      "datatype": "enum",     "enum": ["MESSENGER","WEB","DIRECT"], "default": "MESSENGER" },
+        { "column_name": "campaign",    "datatype": "varchar",   "length": 255, "default": "Festival 30/4 - 1/5" },
+        { "column_name": "played_at",   "datatype": "datetime" },
+        { "column_name": "fb_psid",      "datatype": "varchar",   "length": 100 },
+        { "column_name": "completed",   "datatype": "boolean",   "default": false },
+        { "column_name": "created_at",  "datatype": "datetime",  "default": "now" }
+      ],
+      "indexes": [
+        { "columns": ["phone"],       "name": "idx_jigsaw_phone" },
+        { "columns": ["fb_psid"],     "name": "idx_jigsaw_fb_psid" },
+        { "columns": ["completed"],   "name": "idx_jigsaw_completed" },
+        { "columns": ["played_at"],   "name": "idx_jigsaw_played_at" }
+      ]
+    },
+    {
+      "table_name": "jigsaw_results",
+      "description": "Lưu kết quả chơi Speed Jigsaw — thời gian, điểm, voucher",
+      "columns": [
+        { "column_name": "id",             "datatype": "ID",       "primary": true },
+        { "column_name": "phone",          "datatype": "varchar",  "length": 15,   "required": true },
+        { "column_name": "fb_psid",        "datatype": "varchar",  "length": 100 },
+        { "column_name": "time_seconds",   "datatype": "int",      "description": "Thời gian hoàn thành (giây)" },
+        { "column_name": "time_ms",        "datatype": "int",      "description": "Thời gian hoàn thành (milisecond)" },
+        { "column_name": "completed",      "datatype": "boolean",  "description": "Đã hoàn thành trước khi hết giờ" },
+        { "column_name": "prize",          "datatype": "varchar",  "length": 255 },
+        { "column_name": "prize_code",     "datatype": "varchar",  "length": 50 },
+        { "column_name": "prize_value",    "datatype": "int",      "description": "Giá trị voucher (VNĐ)" },
+        { "column_name": "won_at",         "datatype": "datetime" },
+        { "column_name": "redeemed",       "datatype": "boolean",  "default": false },
+        { "column_name": "redeemed_at",    "datatype": "datetime" },
+        { "column_name": "campaign",       "datatype": "varchar",  "length": 255, "default": "Festival 30/4 - 1/5" },
+        { "column_name": "created_at",     "datatype": "datetime", "default": "now" }
+      ],
+      "indexes": [
+        { "columns": ["phone"],       "name": "idx_jigsaw_res_phone" },
+        { "columns": ["prize_code"],  "name": "idx_jigsaw_res_code", "unique": false },
+        { "columns": ["redeemed"],    "name": "idx_jigsaw_res_redeemed" }
+      ]
+    },
+    {
+      "table_name": "jigsaw_vouchers",
+      "description": "Quản lý mã voucher — kho voucher cố định cho chiến dịch",
+      "columns": [
+        { "column_name": "id",            "datatype": "ID",       "primary": true },
+        { "column_name": "code",          "datatype": "varchar",  "length": 50,   "required": true },
+        { "column_name": "prize",        "datatype": "varchar",  "length": 255 },
+        { "column_name": "prize_value",  "datatype": "int",      "description": "Giá trị VNĐ" },
+        { "column_name": "phone",         "datatype": "varchar",  "length": 15 },
+        { "column_name": "issued_at",     "datatype": "datetime" },
+        { "column_name": "expires_at",    "datatype": "datetime" },
+        { "column_name": "redeemed",      "datatype": "boolean",  "default": false },
+        { "column_name": "redeemed_at",   "datatype": "datetime" },
+        { "column_name": "redeemed_by",  "datatype": "varchar",  "length": 255 },
+        { "column_name": "campaign",      "datatype": "varchar", "length": 255, "default": "Festival 30/4 - 1/5" }
+      ],
+      "indexes": [
+        { "columns": ["code"],      "name": "idx_vouchers_code" },
+        { "columns": ["phone"],     "name": "idx_vouchers_phone" },
+        { "columns": ["redeemed"],  "name": "idx_vouchers_redeemed" }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "name": "daily_stats",
+      "description": "Thống kê theo ngày",
+      "sql": "SELECT DATE(played_at) as day, COUNT(*) as total_plays, SUM(CASE WHEN completed = true THEN 1 ELSE 0 END) as completions FROM jigsaw_leads GROUP BY day ORDER BY day DESC"
+    },
+    {
+      "name": "prize_summary",
+      "description": "Tổng hợp phần thưởng",
+      "sql": "SELECT prize, COUNT(*) as count, SUM(prize_value) as total_value FROM jigsaw_results WHERE prize IS NOT NULL GROUP BY prize ORDER BY count DESC"
+    }
+  ],
+  "webhooks": [
+    {
+      "event": "INSERT",
+      "table": "jigsaw_leads",
+      "notification_url": "{{WEBHOOK_URL}}/api/lead",
+      "method": "POST"
+    },
+    {
+      "event": "INSERT",
+      "table": "jigsaw_results",
+      "notification_url": "{{WEBHOOK_URL}}/api/game-result",
+      "method": "POST"
+    }
+  ]
+}

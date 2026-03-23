@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#fcf6ed",
+                        "secondary-fixed": "#ffc967",
+                        "primary-dim": "#a30021",
+                        "surface-variant": "#e2dcd1",
+                        "primary-fixed": "#ff7576",
+                        "surface-container-low": "#f6f0e6",
+                        "on-surface-variant": "#5e5b54",
+                        "on-tertiary-fixed-variant": "#5c2d00",
+                        "background": "#fcf6ed",
+                        "tertiary-fixed": "#ff973e",
+                        "on-secondary-fixed": "#473000",
+                        "outline": "#7a766f",
+                        "surface-container": "#ede7dd",
+                        "on-tertiary-fixed": "#2a1100",
+                        "primary": "#b71029",
+                        "on-primary": "#ffefee",
+                        "on-secondary": "#fff1de",
+                        "surface": "#fcf6ed",
+                        "on-primary-container": "#4e000a",
+                        "on-tertiary": "#fff0e7",
+                        "primary-fixed-dim": "#ff595f",
+                        "tertiary": "#8e4900",
+                        "secondary-dim": "#6a4a00",
+                        "tertiary-container": "#ff973e",
+                        "error-container": "#f95630",
+                        "tertiary-fixed-dim": "#f98400",
+                        "on-secondary-fixed-variant": "#6b4b00",
+                        "error": "#b02500",
+                        "inverse-primary": "#ff525a",
+                        "primary-container": "#ff7576",
+                        "on-tertiary-container": "#4f2600",
+                        "error-dim": "#b92902",
+                        "on-secondary-container": "#5f4200",
+                        "surface-dim": "#dad4c8",
+                        "surface-tint": "#b71029",
+                        "on-primary-fixed-variant": "#60000f",
+                        "on-background": "#312e29",
+                        "on-error-container": "#520c00",
+                        "secondary": "#795500",
+                        "outline-variant": "#b1ada5",
+                        "surface-container-highest": "#e2dcd1",
+                        "inverse-surface": "#100e09",
+                        "surface-container-high": "#e8e2d7",
+                        "secondary-container": "#ffc967",
+                        "inverse-on-surface": "#a19c95",
+                        "on-error": "#ffefec",
+                        "on-primary-fixed": "#000000",
+                        "tertiary-dim": "#7d3f00",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb702",
+                        "on-surface": "#312e29"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .jigsaw-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-[#fcf6ed] dark:bg-stone-900 flex justify-between items-center px-6 py-4 w-full docked full-width top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#b71029] dark:text-[#ff7576] cursor-pointer" data-icon="menu">menu</span>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-[#312e29] dark:text-[#fcf6ed] text-lg">Maycha Festival</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-[#b71029]/20">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User profile avatar with festive warm colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRZB524oel7d4werDl2pzyIiMfSL6ltzEb5uTbeWRRCko_H0ni1g6Lr_FVEDJRgRwoVRLrwWqWRhhuTP9Y0UpisGtrOMl1pgBkk_LaBLtTc0XcLVVPxthOggo7I2Ii2Aets5_cT9cKnXlTd8CHgIA-EAwZPOUk4iMIzFWuPJCZJI9ifDa-DJrAen-dRKvqidD533vYYuukg64Q-xgUpWeFJWZl6-fVsi_N5kpePl2uSql2hQ0tYYJsy_ZfhUGoLQMQOpx_skz0j1k"/>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center px-4 pt-6 pb-24 max-w-lg mx-auto w-full relative">
+<!-- Game HUD: Timer & Score -->
+<div class="w-full grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-1">Thời gian</span>
+<span class="font-headline text-3xl font-extrabold text-primary tracking-tighter">03:00</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-tertiary-fixed"></div>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-1">Điểm số</span>
+<span class="font-headline text-3xl font-extrabold text-on-surface tracking-tighter">1,250</span>
+</div>
+</div>
+<!-- Jigsaw Game Board Area -->
+<div class="relative w-full aspect-square max-w-[400px] mb-8 group">
+<!-- Glassmorphism Container for the Grid -->
+<div class="absolute inset-0 bg-surface-container-highest/70 backdrop-blur-xl rounded-lg shadow-[0_20px_50px_rgba(183,16,41,0.1)] p-2">
+<div class="jigsaw-grid w-full h-full gap-0.5">
+<!-- 36 Puzzle Pieces (6x6) -->
+<!-- Simulating a mix of placed and unplaced pieces -->
+<!-- Row 1 -->
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<!-- Row 2 (Some pieces visible) -->
+<div class="bg-white/40 rounded-sm"></div>
+<div class="relative overflow-hidden rounded-sm group-active:scale-105 transition-transform cursor-pointer">
+<img class="absolute scale-[6] translate-x-[20%] translate-y-[20%] w-full h-full object-cover grayscale opacity-40" data-alt="Close up detail of a bubble tea cup with festive red pearls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBaDV2Qwwvi2IowCAw1pSRL3ww6GJjnEGXAC9oDN8cfZ97wFRyCEArhbc83dFoZQLXtrqbDrvDs6ZgTNFI8BlmWuy7a6Dz_Sm3N3t0jm6R1EHD2jdOS8PVaLM-TJ5iZ5soja1f38mo5V5-oot-tzjZHBbSBfyOcwIg1EFf_Zz9PDtyFD9ibzfyAvFcSTgjZp-rdNxzEeDBWLb-nO0y8DZbViMD9er_MK64Pw3e9zqspgANfXW8keviZWalDtCwaJ5X-vCS4TzBZHk"/>
+</div>
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<!-- Row 3 (Focus area) -->
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<div class="relative overflow-hidden rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary/40 text-sm" data-icon="add">add</span>
+</div>
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<!-- Row 4-6 placeholders -->
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+<div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div><div class="bg-white/40 rounded-sm"></div>
+</div>
+</div>
+<!-- Floating Preview Bubble -->
+<div class="absolute -top-4 -right-4 w-24 h-24 rounded-2xl border-4 border-white shadow-xl rotate-6 overflow-hidden z-10">
+<img class="w-full h-full object-cover" data-alt="Maycha bubble tea cup with 30/4 decorations" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR8TGgY1Mrw0vkYnuXp5nweiy0be5mbW05v0h38Mx5gLbH6uW-Q721eXJSaK52z4ZCiXNYJuSZTaU95iootFMBs4At8KZEreX1kB9qrO3hqgjjvx9GWpTwN_fbavgvUpaQezT8FA9hwSLA8sOWvP8-kz7eBSdJLh-9noH_aS8t4acCdwCJCuFMDNgXu3etc4EsKhc9t9X326PPiQZxYD2z3XcZTiknDISem9UdrxdSYLbtUh1fH6PP7mqdmOptteNeNr610APPR8Y"/>
+<div class="absolute bottom-0 right-0 bg-primary text-white text-[8px] font-bold px-1 py-0.5">XEM TRƯỚC</div>
+</div>
+</div>
+<!-- Controls Area -->
+<div class="w-full space-y-4">
+<div class="flex gap-4">
+<button class="flex-1 bg-surface-container-high py-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-surface" data-icon="pause">pause</span>
+<span class="font-headline font-bold text-on-surface">Tạm dừng</span>
+</button>
+<button class="flex-1 bg-surface-container-high py-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-secondary" data-icon="lightbulb">lightbulb</span>
+<span class="font-headline font-bold text-on-surface">Gợi ý</span>
+</button>
+</div>
+<!-- Main Action: Piece Selection/Tray -->
+<div class="bg-surface-container-low rounded-xl p-4 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label text-xs font-bold uppercase tracking-widest text-secondary">Mảnh ghép tiếp theo</span>
+<span class="font-label text-[10px] text-on-surface-variant">Vuốt để chọn</span>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-lg shadow-sm border border-outline-variant/15 flex items-center justify-center relative active:scale-110 transition-transform">
+<img class="w-16 h-16 object-cover rounded-md" data-alt="Puzzle piece showing a part of a tea cup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ1EZUHV8LbsFzmIIOUF57hM2xAJbxBBc1YAF7IBrqqn9CJbJvYthHWIbTP4fgEXB77gMCI4vNFRBoA3ixY6a3tkzzW95Sh0El15i2ECXd61Qq6cjXJ1rC1-IaNAA478IRkoJOtDH5t2CLnI28swJCKvi-zW0EzmYCnbKpHI3cBq-R2iKtcZOEhkoazTZ2G_vQNFYsoQ0BRFWN8VF31vAmqZfQ-RJr-AT70ZRBLmA339lm7Eejgq1EvQXnn4C0hawYMJdJtBr0ipw"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-lg shadow-sm border border-outline-variant/15 flex items-center justify-center relative opacity-80">
+<img class="w-16 h-16 object-cover rounded-md brightness-90" data-alt="Puzzle piece with milk tea texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOTMsHK6bKShb1uOsR-fBkvHAJqGByBNZurxrqA2sojKv2LE5MCgyt3e3JT7YAjwUrri0tPxECoyP_MB_Lup8vpHlZY69w3WHWxbfkQIa4VmYudpLFuFAjhHDT-KC76TD7ukW44hPbOBsenWEUZsaiqgR7s1-mecePEKfKkJ68QrduEwFMIGqS5UbFTTjisJlg8Wwkmy4g7Z-z-x-fV51USEZmos0Hx3Z3CFsF89EbdiYje5_nzYsx8OGtNpAP5tHKXALra74sWRY"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-lg shadow-sm border border-outline-variant/15 flex items-center justify-center relative opacity-60">
+<img class="w-16 h-16 object-cover rounded-md brightness-75" data-alt="Puzzle piece showing red festive ribbon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCydPDGNWBw-tTu_xy48MRpioBG1v3e2FL99A1vApzX2gSb8NcAInId939h_8d6kq0kLvdd4a8J2XrenyPWX5irSmt77GEYQG6cAZjyMkU7RB2HLdzzyC2ASs94ZyfISf6Xhe44U8vfE8Eq6EdrQnD1hfom8oQYAh1pGlL7oNeT9pK4o6yfvxaNmEyp3GsxLcHHS0nqkB2zeE-avHZwuILixsAe7-EVFYdNyaaacOX1IRd5ilLqliKjHYF30DlJt2GftaUkjYRLgL4"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-lg shadow-sm border border-outline-variant/15 flex items-center justify-center relative opacity-40">
+<img class="w-16 h-16 object-cover rounded-md brightness-50" data-alt="Abstract tea background piece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2ZT8KlAvgwzoRojkLvnzCSEu4Df0Hw5v1lc3AkTSOrCaZ_4fpzpiI9SbyFztH80o-pGfrd0t8PN7Z_pji157AhhgtmdA0kPnB6Kgg0S7_UCRaHeBqyNgs0Pi135-OUFZrKb_b55d8rz4XigQwiuURHVN-3j_pFOm_m1rngMSaz87yGLfKfPGqrJ6mw4rXsB1wyNFHF06enxBzQXOvRyHxbB5w4or06mHwySqxQl4a4rrRUpP2Os_C0zQpmY4J7mvn5FRNbseknnw"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-8 w-full">
+<div class="flex justify-between items-end mb-2">
+<span class="font-headline font-extrabold text-on-surface">Tiến độ</span>
+<span class="font-headline font-bold text-tertiary">14/36</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-tertiary to-tertiary-fixed rounded-full" style="width: 38.8%"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-[#fcf6ed]/90 dark:bg-stone-900/90 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-[3rem] pb-safe shadow-[0_-4px_20px_0_rgba(49,46,41,0.06)] border-t border-[#312e29]/10 dark:border-[#fcf6ed]/10">
+<div class="flex justify-around items-center px-4 py-3 w-full">
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#b71029] to-[#ff7576] text-white rounded-full px-5 py-2 scale-110 duration-200 ease-out">
+<span class="material-symbols-outlined text-lg" data-icon="extension" style="font-variation-settings: 'FILL' 1;">extension</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Play</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#795500] dark:text-[#ffc967] opacity-70 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="local_activity">local_activity</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Rewards</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#795500] dark:text-[#ffc967] opacity-70 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Ranks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#795500] dark:text-[#ffc967] opacity-70 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="info">info</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest">Rules</span>
+</div>
+</div>
+</nav>
+<!-- Floating Action Button (Suppressed as per rules for game context focus, but if needed for restart/undo it would go here) -->
+</body></html>

@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Maycha Speed Jigsaw — Festival 30/4 - 1/5</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'surface-bright': '#fcf6ed',
+        'surface': '#fcf6ed',
+        'surface-container-low': '#f6f0e6',
+        'surface-container': '#ede7dd',
+        'surface-container-high': '#e8e2d7',
+        'surface-container-highest': '#e2dcd1',
+        'surface-container-lowest': '#ffffff',
+        'primary': '#b71029',
+        'primary-fixed': '#ff7576',
+        'primary-dim': '#a30021',
+        'secondary': '#795500',
+        'secondary-container': '#ffc967',
+        'secondary-fixed': '#ffc967',
+        'tertiary': '#8e4900',
+        'tertiary-fixed': '#ff973e',
+        'on-surface': '#312e29',
+        'on-surface-variant': '#5e5b54',
+        'on-primary': '#ffefee',
+        'on-primary-container': '#4e000a',
+        'on-secondary': '#fff1de',
+        'on-secondary-container': '#5f4200',
+        'on-tertiary-fixed': '#2a1100',
+        'outline': '#7a766f',
+        'outline-variant': '#b1ada5',
+        'background': '#fcf6ed',
+      },
+      fontFamily: {
+        'headline': ['Plus Jakarta Sans'],
+        'body': ['Be Vietnam Pro'],
+        'label': ['Plus Jakarta Sans'],
+      },
+      borderRadius: {'DEFAULT': '1rem', 'lg': '2rem', 'xl': '3rem', 'full': '9999px'},
+    },
+  },
+}
+</script>
+<style>
+/* ===== Design Tokens — Festive Effervescence ===== */
+:root {
+  --color-primary:          #b71029;
+  --color-primary-container: #ff7576;
+  --color-secondary:         #795500;
+  --color-secondary-container:#ffc967;
+  --color-tertiary:          #8e4900;
+  --color-tertiary-fixed:    #ff973e;
+  --color-surface:           #fcf6ed;
+  --color-surface-container-low: #f6f0e6;
+  --color-surface-container: #ede7dd;
+  --color-surface-container-high: #e8e2d7;
+  --color-surface-container-highest: #e2dcd1;
+  --color-surface-lowest:    #ffffff;
+  --color-on-surface:        #312e29;
+  --color-on-surface-variant:#5e5b54;
+  --color-outline-variant:   #b1ada5;
+
+  --font-headline: 'Plus Jakarta Sans', sans-serif;
+  --font-body:     'Be Vietnam Pro', sans-serif;
+  --font-label:    'Plus Jakarta Sans', sans-serif;
+
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring-snappy: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Base ===== */
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+body {
+  min-height: 100dvh;
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  color: var(--color-on-surface);
+  overflow-x: hidden;
+}
+
+/* ===== Material Symbols ===== */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ===== Glassmorphism ===== */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.glass-dark {
+  background: rgba(246, 240, 230, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ===== Glossy Button (Primary CTA) ===== */
+.glossy-btn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    0 4px 15px rgba(183, 16, 41, 0.35);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 150ms var(--spring-snappy),
+    box-shadow 150ms var(--spring-snappy);
+}
+.glossy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    0 8px 25px rgba(183, 16, 41, 0.4);
+}
+.glossy-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+.glossy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== Secondary Button ===== */
+.btn-secondary {
+  background: var(--color-surface-container-highest);
+  color: var(--color-on-surface);
+  border: none;
+  cursor: pointer;
+  transition: transform 150ms var(--spring-snappy), background 150ms ease;
+}
+.btn-secondary:hover { background: var(--color-surface-container-high); }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ===== Floating Input ===== */
+.input-float {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--color-outline-variant);
+  border-radius: 12px;
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface);
+  font-size: 18px;
+  font-family: var(--font-body);
+  text-align: center;
+  outline: none;
+  transition:
+    border-color 150ms var(--spring-snappy),
+    box-shadow 150ms var(--spring-snappy),
+    transform 150ms var(--spring-snappy);
+}
+.input-float:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(183, 16, 41, 0.15);
+  transform: scale(1.01);
+}
+.input-float.error {
+  border-color: var(--color-primary);
+  animation: shake 0.4s var(--spring-snappy);
+}
+.input-float::placeholder { color: var(--color-on-surface-variant); }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ===== Hero Pattern ===== */
+.hero-pattern {
+  background-image: radial-gradient(circle at 2px 2px, var(--color-surface-container) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* ===== Confetti Background ===== */
+.confetti-bg {
+  background-image:
+    radial-gradient(circle at 20% 30%, #ff7576 2px, transparent 2px),
+    radial-gradient(circle at 80% 10%, #ffc967 3px, transparent 3px),
+    radial-gradient(circle at 50% 50%, #b71029 2px, transparent 2px),
+    radial-gradient(circle at 10% 80%, #ff973e 4px, transparent 4px),
+    radial-gradient(circle at 90% 90%, #ff7576 3px, transparent 3px);
+  background-size: 100px 100px;
+}
+
+/* ===== Screen Wrapper ===== */
+.screen { display: none; width: 100%; min-height: 100dvh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.08); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.12); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(183,16,41,0.3); }
+  50%       { box-shadow: 0 0 25px rgba(183,16,41,0.6), 0 0 40px rgba(183,16,41,0.3); }
+}
+@keyframes resultPop {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(4deg); opacity: 1; }
+  80%  { transform: scale(0.96) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes pieceCorrect {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+@keyframes countdownPop {
+  0%   { transform: scale(1.3); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes pieceSelected {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); box-shadow: 0 8px 24px rgba(183,16,41,0.4); }
+  100% { transform: scale(1.04); }
+}
+
+.animate-fade-in-up   { animation: fadeInUp   400ms var(--spring-smooth) both; }
+.animate-fade-in-scale{ animation: fadeInScale 400ms var(--spring-bounce) both; }
+.animate-bounce-in    { animation: bounceIn    600ms var(--spring-bounce) both; }
+.animate-float        { animation: floatY       3s ease-in-out infinite; }
+.animate-glow-pulse   { animation: glowPulse    2s ease-in-out infinite; }
+.animate-result-pop   { animation: resultPop   600ms var(--spring-bounce) both; }
+
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 160ms; }
+.stagger-4 { animation-delay: 240ms; }
+.stagger-5 { animation-delay: 320ms; }
+.stagger-6 { animation-delay: 400ms; }
+
+/* ===== Puzzle Grid ===== */
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 2px;
+}
+.puzzle-slot {
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  aspect-ratio: 1;
+  position: relative;
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease;
+  overflow: hidden;
+}
+.puzzle-slot:hover:not(.filled) {
+  background: rgba(255,255,255,0.4);
+}
+.puzzle-slot.filled {
+  background: transparent;
+  cursor: default;
+}
+.puzzle-slot.target {
+  outline: 2px dashed rgba(183,16,41,0.5);
+  outline-offset: -2px;
+  background: rgba(183,16,41,0.08);
+}
+.puzzle-slot canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 4px;
+}
+
+/* ===== Piece Tray ===== */
+.piece-tray {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 4px 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+.piece-tray::-webkit-scrollbar { display: none; }
+
+.piece-item {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    transform 200ms var(--spring-snappy),
+    box-shadow 200ms ease,
+    opacity 200ms ease;
+  position: relative;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+.piece-item:active { transform: scale(1.08); }
+.piece-item.selected {
+  border-color: var(--color-primary);
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(183,16,41,0.4);
+  animation: pieceSelected 400ms var(--spring-bounce);
+}
+.piece-item.placed {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+.piece-item canvas {
+  display: block;
+  border-radius: 10px;
+}
+
+/* ===== Progress Bar ===== */
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: var(--color-surface-container-highest);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-tertiary), var(--color-tertiary-fixed));
+  border-radius: 999px;
+  transition: width 0.4s var(--spring-smooth);
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite linear;
+  background-size: 200% 100%;
+}
+
+/* ===== Timer Badge ===== */
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-surface-container-low);
+  border: 1px solid var(--color-outline-variant);
+  font-family: var(--font-headline);
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-on-surface);
+  transition: transform 150ms var(--spring-bounce);
+  letter-spacing: -0.02em;
+}
+.timer-badge.warning {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  animation: timerPulse 0.5s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(183,16,41,0.2);
+}
+.timer-badge.danger {
+  border-color: var(--color-primary);
+  background: rgba(183,16,41,0.08);
+  color: var(--color-primary);
+  animation: timerPulse 0.3s ease-in-out infinite;
+}
+
+/* ===== Score Display ===== */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-secondary-container);
+  border: 1px solid rgba(121,85,0,0.15);
+  font-family: var(--font-headline);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-secondary);
+  letter-spacing: -0.02em;
+}
+
+/* ===== Voucher Card ===== */
+.voucher-card {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-container));
+  border-radius: 20px;
+  padding: 3px;
+  box-shadow: 0 8px 30px rgba(183,16,41,0.25);
+  position: relative;
+}
+.voucher-inner {
+  background: var(--color-surface);
+  border-radius: calc(20px - 3px);
+  padding: 20px;
+  border: 2px dashed rgba(183,16,41,0.2);
+}
+.voucher-hole {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--color-surface-bright);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.voucher-hole.left  { left: -12px; }
+.voucher-hole.right { right: -12px; }
+
+/* ===== Confetti ===== */
+.confetti-particle {
+  position: fixed;
+  top: -10px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+
+/* ===== Bottom Nav ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(252, 246, 237, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(49,46,41,0.08);
+  border-radius: 3rem 3rem 0 0;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ===== Loading overlay ===== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(252,246,237,0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  gap: 16px;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-surface-container-highest);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Preview bubble ===== */
+.preview-bubble {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  border: 3px solid white;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transform: rotate(8deg);
+  overflow: hidden;
+  z-index: 10;
+}
+.preview-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.preview-bubble-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-primary);
+  color: white;
+  font-size: 7px;
+  font-weight: 700;
+  text-align: center;
+  padding: 2px 0;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(49,46,41,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-overlay.active { display: flex; }
+.modal-card {
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 32px 24px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: fadeInScale 300ms var(--spring-bounce) both;
+}
+
+/* ===== Particles Canvas ===== */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== PARTICLES CANVAS ======================== -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ======================== LOADING ======================== -->
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+  <p class="font-headline text-on-surface font-bold" style="color:var(--color-on-surface)">Đang tải game...</p>
+</div>
+
+<!-- ======================== SCREEN 1: LEAD CAPTURE ======================== -->
+<div class="screen" id="screen-lead">
+  <main class="flex-grow flex flex-col items-center justify-center px-6 pt-12 pb-36 max-w-lg mx-auto w-full relative">
+    <div class="absolute inset-0 hero-pattern opacity-40"></div>
+
+    <!-- Floating Decorative Blobs -->
+    <div class="absolute top-20 right-[-60px] w-48 h-48 rounded-full opacity-20 blur-3xl pointer-events-none"
+         style="background:var(--color-secondary-container)"></div>
+    <div class="absolute bottom-40 left-[-40px] w-40 h-40 rounded-full opacity-15 blur-3xl pointer-events-none"
+         style="background:var(--color-primary)"></div>
+
+    <div class="relative z-10 w-full space-y-6">
+      <!-- Logo Badge -->
+      <div class="flex justify-center animate-fade-in-up stagger-1">
+        <div class="flex items-center gap-2 px-4 py-1.5 rounded-full"
+             style="background:var(--color-secondary-container); color:var(--color-secondary)">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL'1">local_cafe</span>
+          <span class="font-label text-xs font-bold tracking-widest uppercase">Special Event 30/4 - 1/5</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="text-center animate-fade-in-up stagger-2">
+        <h1 class="font-headline font-black text-4xl tracking-tighter leading-none mb-2"
+            style="color:var(--color-primary)">SPEED<br>JIGSAW</h1>
+        <p class="font-body text-base leading-relaxed" style="color:var(--color-on-surface-variant)">
+          Mừng đại lễ, ghép hình mê say,<br>nhận quà liền tay!
+        </p>
+      </div>
+
+      <!-- Prize Teaser Card -->
+      <div class="animate-fade-in-up stagger-3 rounded-2xl overflow-hidden shadow-lg"
+           style="background:var(--color-surface-container-low)">
+        <img class="w-full h-32 object-cover"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuNlxPWkESnzzgoU6RnVhBV-6IieILFA3z9b0PK0iR8fPbwvJ9cA9nVVkQtVhuAqSI6Qq_I8SvlifAW-OgquUKeLVv4sHWyrHv0_vAR8XoGvBgL0v1y4jRSFNysDENv4MJkiIcO4I05pTibTsvtGnRMHe83s4TuyuQgfESxMRxbi-HONsO6KNEG4erb72FEQe6QRrCW9EtS-DEgvWdDjeALG9IToJsJNpjMPnAQ7xOrHyP1BuVNHMmB9V2WnG6BrtUSV_df2lo6b8"
+             alt="Bubble tea prize" style="width:100%;height:128px;object-fit:cover">
+        <div class="p-4 flex items-center justify-between">
+          <div>
+            <p class="font-label text-xs font-bold uppercase tracking-widest mb-1"
+               style="color:var(--color-tertiary)">Phần thưởng</p>
+            <p class="font-headline font-extrabold text-xl" style="color:var(--color-on-surface)">Voucher Trà Sữa</p>
+          </div>
+          <div class="text-right">
+            <p class="font-headline font-black text-2xl" style="color:var(--color-primary)">10K-100K</p>
+            <p class="font-label text-xs" style="color:var(--color-on-surface-variant)">VNĐ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rules Quick -->
+      <div class="animate-fade-in-up stagger-4 flex gap-3">
+        <div class="flex-1 rounded-xl p-4 text-center" style="background:var(--color-surface-container-high)">
+          <span class="material-symbols-outlined text-2xl mb-1" style="color:var(--color-tertiary)">timer</span>
+          <p class="font-headline font-bold text-sm">60 giây</p>
+          <p class="font-label text-xs" style="color:var(--color-on-surface-variant)">Thời gian</p>
+        </div>
+        <div class="flex-1 rounded-xl p-4 text-center" style="background:var(--color-surface-container-high)">
+          <span class="material-symbols-outlined text-2xl mb-1" style="color:var(--color-tertiary)">extension</span>
+          <p class="font-headline font-bold text-sm">36 mảnh</p>
+          <p class="font-label text-xs" style="color:var(--color-on-surface-variant)">6×6 grid</p>
+        </div>
+        <div class="flex-1 rounded-xl p-4 text-center" style="background:var(--color-surface-container-high)">
+          <span class="material-symbols-outlined text-2xl mb-1" style="color:var(--color-tertiary)">card_giftcard</span>
+          <p class="font-headline font-bold text-sm">Voucher</p>
+          <p class="font-label text-xs" style="color:var(--color-on-surface-variant)">Miễn phí</p>
+        </div>
+      </div>
+
+      <!-- Lead Form -->
+      <div class="animate-fade-in-up stagger-5 space-y-3">
+        <div>
+          <label class="font-label text-xs font-bold uppercase tracking-widest block mb-2"
+                 style="color:var(--color-on-surface-variant)">
+            Nhập SĐT để bắt đầu
+          </label>
+          <input
+            id="input-phone"
+            type="tel"
+            class="input-float"
+            placeholder="0xxxxxxxxx"
+            maxlength="10"
+            inputmode="numeric"
+            autocomplete="tel"
+          />
+          <p id="phone-error" class="font-label text-xs mt-1.5 flex items-center gap-1"
+             style="color:var(--color-primary); display:none">
+            <span class="material-symbols-outlined text-sm">error</span>
+            SĐT không hợp lệ (09xxxxxxxx)
+          </p>
+        </div>
+        <button id="btn-start-lead" class="glossy-btn w-full py-4 rounded-full font-headline font-extrabold text-lg tracking-tight flex items-center justify-center gap-2"
+                onclick="submitLead()">
+          <span class="material-symbols-outlined">rocket_launch</span>
+          <span>BẮT ĐẦU CHƠI</span>
+        </button>
+      </div>
+
+      <!-- Trust -->
+      <p class="animate-fade-in-up stagger-6 text-center font-label text-xs"
+         style="color:var(--color-on-surface-variant)">
+        🔒 SĐT của bạn được bảo mật, chỉ dùng để nhận quà tại Maycha
+      </p>
+    </div>
+  </main>
+</div>
+
+<!-- ======================== SCREEN 2: START ======================== -->
+<div class="screen" id="screen-start">
+  <header class="glass-dark flex justify-between items-center px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-xl" style="color:var(--color-primary)">local_cafe</span>
+      <span class="font-headline font-bold tracking-tight text-lg" style="color:var(--color-on-surface)">Maycha Festival</span>
+    </div>
+    <div class="w-9 h-9 rounded-full overflow-hidden border-2"
+         style="border-color:var(--color-primary); opacity:0.6">
+      <img id="header-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB8xfu919aEpTd68vrrfD6jPrxNitNN5FoYsoXB_Ss7ISuQTYsP1sviKiBsBAidcFyI4ikwjuqepbMVJ7-oJxLZbx7DcO1vcJ2rv93B5dYDvVxkObiNu5HcvyQRBuKcDT-Qo1I0YVmW8ZBVMUSnpYgGA43NIORPYkYYXoWBoljXb1B0rnIO11q15bmaejpHRDrLripNTiuOVN9_bjdpdgWwtkCoJZa2f0R-leHmm-HkfxiVFyw3L6Eg0-iP8Q2xGg3uDJXKD5OCUg"
+           alt="Avatar" class="w-full h-full object-cover">
+    </div>
+  </header>
+
+  <main class="flex-grow pb-36">
+    <!-- Hero Banner -->
+    <section class="relative px-6 pt-6 pb-8 overflow-hidden">
+      <div class="absolute inset-0 hero-pattern opacity-40"></div>
+      <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-25 blur-3xl pointer-events-none"
+           style="background:var(--color-secondary-container)"></div>
+      <div class="absolute -bottom-12 -left-12 w-44 h-44 rounded-full opacity-20 blur-3xl pointer-events-none"
+           style="background:var(--color-primary)"></div>
+
+      <div class="relative z-10 rounded-2xl overflow-hidden min-h-[280px] flex flex-col items-center justify-center text-center p-8 shadow-xl"
+           style="background:linear-gradient(135deg, var(--color-primary-container), var(--color-primary))">
+        <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-3"
+             style="background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3)">
+          <span class="font-label text-xs font-bold tracking-widest uppercase text-white">Special Event 30/4 - 1/5</span>
+        </div>
+        <h2 class="font-headline font-black text-5xl text-white tracking-tighter mb-2 leading-none animate-fade-in-up stagger-2">
+          SPEED<br>JIGSAW
+        </h2>
+        <p class="font-body text-white/80 text-base mb-6 max-w-[260px] animate-fade-in-up stagger-3">
+          Mừng đại lễ, ghép hình mê say, nhận quà liền tay!
+        </p>
+        <button id="btn-play" class="glossy-btn rounded-full px-10 py-4 font-headline font-extrabold text-lg text-white flex items-center gap-3 animate-fade-in-up stagger-4 active:scale-95"
+                onclick="startGame()">
+          <span class="material-symbols-outlined text-xl">play_arrow</span>
+          CHƠI NGAY
+        </button>
+      </div>
+    </section>
+
+    <!-- Instructions & Stats (Asymmetric Bento) -->
+    <section class="px-6 grid grid-cols-2 gap-4 mb-6">
+      <div class="col-span-2 rounded-xl p-5 flex items-start gap-4"
+           style="background:var(--color-surface-container-low)">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow"
+             style="background:var(--color-tertiary-fixed)">
+          <span class="material-symbols-outlined text-2xl" style="color:var(--color-on-tertiary-fixed)">extension</span>
+        </div>
+        <div>
+          <h3 class="font-headline font-bold text-base mb-1" style="color:var(--color-on-surface)">Luật chơi</h3>
+          <p class="font-body text-sm leading-relaxed" style="color:var(--color-on-surface-variant)">
+            Ghép hình 6×6 nhanh nhất để nhận voucher trà sữa Maycha cực hấp dẫn!
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-xl p-4 flex flex-col justify-between aspect-square"
+           style="background:var(--color-surface-container-highest)">
+        <span class="material-symbols-outlined text-2xl" style="color:var(--color-primary)">timer</span>
+        <div>
+          <p class="font-label text-[10px] uppercase font-bold tracking-widest mb-0.5"
+             style="color:var(--color-on-surface-variant)">Thời gian</p>
+          <p class="font-headline font-extrabold text-2xl" style="color:var(--color-on-surface)">60s</p>
+        </div>
+      </div>
+
+      <div class="rounded-xl p-4 flex flex-col justify-between aspect-square"
+           style="background:var(--color-secondary-container)">
+        <span class="material-symbols-outlined text-2xl" style="color:var(--color-secondary)">card_giftcard</span>
+        <div>
+          <p class="font-label text-[10px] uppercase font-bold tracking-widest mb-0.5"
+             style="color:var(--color-secondary)">Phần thưởng</p>
+          <p class="font-headline font-extrabold text-lg" style="color:var(--color-secondary)">Voucher</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser Image -->
+    <section class="px-6 mb-6">
+      <div class="relative rounded-xl overflow-hidden h-44 group shadow-lg cursor-pointer">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuNlxPWkESnzzgoU6RnVhBV-6IieILFA3z9b0PK0iR8fPbwvJ9cA9nVVkQtVhuAqSI6Qq_I8SvlifAW-OgquUKeLVv4sHWyrHv0_vAR8XoGvBgL0v1y4jRSFNysDENv4MJkiIcO4I05pTibTsvtGnRMHe83s4TuyuQgfESxMRxbi-HONsO6KNEG4erb72FEQe6QRrCW9EtS-DEgvWdDjeALG9IToJsJNpjMPnAQ7xOrHyP1BuVNHMmB9V2WnG6BrtUSV_df2lo6b8"
+             alt="Bubble tea">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        <div class="absolute bottom-4 left-4 right-4">
+          <p class="text-white font-headline font-bold text-base">Hàng ngàn ly Trà Sữa đang chờ!</p>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--color-tertiary-fixed)"></span>
+            <span class="text-white/80 font-label text-xs">1,240 người đang chơi</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social proof -->
+    <section class="px-6 flex justify-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+           style="background:var(--color-surface-container-low); border:1px solid var(--color-outline-variant)">
+        <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--color-tertiary-fixed)"></span>
+        <span class="font-label text-xs" style="color:var(--color-on-surface-variant)">
+          🔥 3,421 người đã nhận quà tuần này
+        </span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ======================== SCREEN 3: IN-GAME ======================== -->
+<div class="screen" id="screen-game">
+  <header class="glass-dark flex justify-between items-center px-6 py-3 sticky top-0 z-50">
+    <button class="flex items-center gap-2 btn-secondary px-3 py-2 rounded-xl text-sm font-headline font-bold"
+            onclick="confirmQuit()">
+      <span class="material-symbols-outlined text-lg">close</span>
+      <span>Thoát</span>
+    </button>
+    <div class="flex items-center gap-2">
+      <span class="font-headline font-bold text-sm" style="color:var(--color-secondary)">Maycha</span>
+      <span class="material-symbols-outlined text-primary" style="color:var(--color-primary)">local_cafe</span>
+    </div>
+  </header>
+
+  <main class="flex-grow flex flex-col items-center px-4 pt-4 pb-36 max-w-lg mx-auto w-full relative">
+    <!-- HUD: Timer + Score -->
+    <div class="w-full grid grid-cols-2 gap-3 mb-5">
+      <div class="rounded-xl p-3 flex flex-col items-center justify-center relative overflow-hidden"
+           style="background:var(--color-surface-container-low)">
+        <div class="absolute top-0 left-0 w-1 h-full rounded-l-xl" style="background:var(--color-primary)"></div>
+        <span class="font-label text-[10px] uppercase font-bold tracking-widest mb-1"
+              style="color:var(--color-on-surface-variant)">Thời gian</span>
+        <div class="timer-badge" id="timer-display">01:00</div>
+      </div>
+      <div class="rounded-xl p-3 flex flex-col items-center justify-center relative overflow-hidden"
+           style="background:var(--color-surface-container-low)">
+        <div class="absolute top-0 right-0 w-1 h-full rounded-r-xl" style="background:var(--color-tertiary-fixed)"></div>
+        <span class="font-label text-[10px] uppercase font-bold tracking-widest mb-1"
+              style="color:var(--color-on-surface-variant)">Mảnh ghép</span>
+        <div class="score-badge" id="score-display">0/36</div>
+      </div>
+    </div>
+
+    <!-- Countdown Overlay (3-2-1) -->
+    <div id="countdown-overlay" class="fixed inset-0 z-50 flex items-center justify-center"
+         style="background:rgba(49,46,41,0.85); backdrop-filter:blur(8px); display:none">
+      <div id="countdown-number" class="font-headline font-black text-8xl text-white animate-bounce-in"
+           style="text-shadow: 0 0 40px rgba(183,16,41,0.6)">3</div>
+    </div>
+
+    <!-- Puzzle Board Area -->
+    <div class="relative w-full mb-5">
+      <!-- Glassmorphism container -->
+      <div class="rounded-2xl overflow-hidden shadow-lg"
+           style="background:rgba(255,255,255,0.75); backdrop-filter:blur(24px); padding:4px">
+        <div class="puzzle-grid" id="puzzle-grid" style="aspect-ratio:1">
+          <!-- 36 slots will be generated here -->
+        </div>
+      </div>
+
+      <!-- Preview Bubble -->
+      <div class="preview-bubble" id="preview-bubble">
+        <img id="preview-img" src="" alt="Preview">
+        <div class="preview-bubble-label">XEM TRƯỚC</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="w-full space-y-3">
+      <!-- Pause & Hint buttons -->
+      <div class="flex gap-3">
+        <button class="flex-1 btn-secondary py-3 rounded-xl flex items-center justify-center gap-2 font-headline font-bold text-sm"
+                onclick="togglePause()">
+          <span class="material-symbols-outlined text-lg" id="pause-icon">pause</span>
+          <span id="pause-label">Tạm dừng</span>
+        </button>
+        <button class="flex-1 btn-secondary py-3 rounded-xl flex items-center justify-center gap-2 font-headline font-bold text-sm"
+                onclick="useHint()" id="btn-hint">
+          <span class="material-symbols-outlined text-lg" style="color:var(--color-secondary)">lightbulb</span>
+          <span>Gợi ý</span>
+        </button>
+      </div>
+
+      <!-- Piece Tray -->
+      <div class="rounded-xl p-4" style="background:var(--color-surface-container-low)">
+        <div class="flex items-center justify-between mb-3">
+          <span class="font-label text-xs font-bold uppercase tracking-widest"
+                style="color:var(--color-secondary)">Mảnh ghép</span>
+          <span class="font-label text-[10px]" style="color:var(--color-on-surface-variant)">Vuốt để chọn</span>
+        </div>
+        <div class="piece-tray" id="piece-tray">
+          <!-- Piece items will be generated here -->
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between items-center">
+          <span class="font-headline font-extrabold text-sm" style="color:var(--color-on-surface)">Tiến độ</span>
+          <span class="font-headline font-bold text-sm" id="progress-text"
+                style="color:var(--color-tertiary)">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pause Modal -->
+  <div class="modal-overlay" id="pause-modal">
+    <div class="modal-card">
+      <span class="material-symbols-outlined text-5xl mb-3" style="color:var(--color-primary)">pause_circle</span>
+      <h3 class="font-headline font-black text-2xl mb-2" style="color:var(--color-on-surface)">Tạm dừng</h3>
+      <p class="font-body text-sm mb-6" style="color:var(--color-on-surface-variant)">
+        Trò chơi đang tạm dừng. Bạn có muốn tiếp tục hay thoát?
+      </p>
+      <div class="flex flex-col gap-3">
+        <button class="glossy-btn w-full py-3.5 rounded-xl font-headline font-extrabold text-base text-white flex items-center justify-center gap-2"
+                onclick="resumeGame()">
+          <span class="material-symbols-outlined">play_arrow</span>
+          Tiếp tục
+        </button>
+        <button class="btn-secondary w-full py-3.5 rounded-xl font-headline font-bold text-sm"
+                onclick="quitGame()">
+          Thoát game
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SCREEN 4: RESULT ======================== -->
+<div class="screen" id="screen-result">
+  <header class="glass-dark flex justify-between items-center px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-xl" style="color:var(--color-primary)">local_cafe</span>
+      <span class="font-headline font-bold tracking-tight text-lg" style="color:var(--color-on-surface)">Maycha Festival</span>
+    </div>
+    <button class="btn-secondary px-3 py-2 rounded-xl font-label text-xs font-bold"
+            onclick="switchScreen('result','start'); resetGame()">
+      <span class="material-symbols-outlined text-sm">home</span>
+    </button>
+  </header>
+
+  <main class="flex-grow relative flex flex-col items-center justify-start px-6 pt-8 pb-36 confetti-bg overflow-hidden">
+    <!-- Confetti Container -->
+    <div id="result-confetti" class="pointer-events-none absolute inset-0 overflow-hidden"></div>
+
+    <!-- Victory Header -->
+    <div class="text-center mb-6 relative animate-fade-in-up stagger-1" id="result-header">
+      <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full opacity-15 blur-3xl -z-10"
+           style="background:var(--color-primary)"></div>
+      <p id="result-eyebrow" class="font-label font-bold tracking-[0.2em] mb-1 uppercase"
+         style="color:var(--color-primary)">Thắng cuộc!</p>
+      <h2 id="result-title" class="font-headline text-[3.5rem] font-black leading-tight tracking-tighter"
+          style="color:var(--color-primary)">Chúc mừng!</h2>
+    </div>
+
+    <!-- Result Bento Grid -->
+    <div class="w-full max-w-md grid grid-cols-2 gap-4 mb-6 animate-fade-in-up stagger-2" id="result-bento">
+      <!-- Time Card -->
+      <div class="rounded-xl p-5 flex flex-col items-center justify-center relative overflow-hidden group"
+           style="background:var(--color-surface-container-low)">
+        <div class="absolute top-1 right-1 opacity-10 group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined text-3xl">timer</span>
+        </div>
+        <span class="font-label text-[10px] uppercase font-bold tracking-widest mb-1"
+              style="color:var(--color-on-surface-variant)">Thời gian</span>
+        <span id="result-time" class="font-headline text-3xl font-extrabold"
+              style="color:var(--color-secondary)">01:45</span>
+      </div>
+
+      <!-- Share Card -->
+      <button class="rounded-xl p-5 flex flex-col items-center justify-center hover:scale-105 transition-transform active:scale-95"
+              style="background:var(--color-surface-container-high)"
+              onclick="shareResult()">
+        <span class="material-symbols-outlined text-3xl mb-1" style="color:var(--color-secondary)">share</span>
+        <span class="font-label text-[10px] font-bold uppercase tracking-widest"
+              style="color:var(--color-secondary)">Chia sẻ</span>
+      </button>
+
+      <!-- Voucher Card -->
+      <div class="col-span-2 voucher-card" id="voucher-card">
+        <div class="voucher-inner relative">
+          <div class="voucher-hole left"></div>
+          <div class="voucher-hole right"></div>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-label text-[10px] font-bold uppercase tracking-[0.2em] mb-0.5"
+                 style="color:var(--color-primary)">Phần thưởng lễ 30/4</p>
+              <h3 id="result-prize" class="font-headline text-2xl font-black tracking-tight"
+                  style="color:var(--color-on-surface)">Voucher 20K</h3>
+              <p class="font-body text-sm mt-0.5" style="color:var(--color-on-surface-variant)">Áp dụng cho mọi loại trà sữa</p>
+            </div>
+            <div class="p-3 rounded-full" style="background:rgba(183,16,41,0.06)">
+              <span class="material-symbols-filled text-4xl" style="color:var(--color-primary)">confirmation_number</span>
+            </div>
+          </div>
+          <!-- Code box -->
+          <div class="mt-4 flex flex-col items-center">
+            <p class="font-label text-[10px] uppercase tracking-widest mb-2"
+               style="color:var(--color-on-surface-variant)">Mã của bạn</p>
+            <div id="result-code" class="inline-block px-6 py-3 rounded-lg font-mono font-bold text-2xl tracking-widest"
+                 style="background:var(--color-surface-container-high); color:var(--color-primary); border:2px dashed var(--color-primary)">
+              MAJTICKET
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="w-full max-w-md flex flex-col gap-3 mt-auto animate-fade-in-up stagger-3" id="result-actions">
+      <button class="glossy-btn w-full py-4 rounded-full font-headline font-extrabold text-base text-white flex items-center justify-center gap-3 relative overflow-hidden"
+              onclick="replayGame()">
+        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        <span class="material-symbols-outlined">replay</span>
+        Chơi lại
+      </button>
+      <button class="btn-secondary w-full py-3.5 rounded-xl font-headline font-bold text-sm flex items-center justify-center gap-3"
+              onclick="viewLeaderboard()">
+        <span class="material-symbols-outlined">leaderboard</span>
+        Xem bảng xếp hạng
+      </button>
+    </div>
+
+    <!-- Expiry notice -->
+    <div class="mt-4 text-center animate-fade-in-up stagger-4" id="result-expiry">
+      <p class="font-label text-xs" style="color:var(--color-on-surface-variant)">
+        ⏰ Hiệu lực trong 30 ngày — Đến cửa hàng Maycha gần nhất
+      </p>
+    </div>
+  </main>
+</div>
+
+<!-- ======================== SCRIPTS ======================== -->
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const GAME_IMAGE = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAuNlxPWkESnzzgoU6RnVhBV-6IieILFA3z9b0PK0iR8fPbwvJ9cA9nVVkQtVhuAqSI6Qq_I8SvlifAW-OgquUKeLVv4sHWyrHv0_vAR8XoGvBgL0v1y4jRSFNysDENv4MJkiIcO4I05pTibTsvtGnRMHe83s4TuyuQgfESxMRxbi-HONsO6KNEG4erb72FEQe6QRrCW9EtS-DEgvWdDjeALG9IToJsJNpjMPnAQ7xOrHyP1BuVNHMmB9V2WnG6BrtUSV_df2lo6b8';
+const GRID_SIZE  = 6;
+const TOTAL_PIECES = GRID_SIZE * GRID_SIZE; // 36
+const GAME_TIME   = 60; // seconds
+const PREVIEW_SIZE = 72;
+
+// Prize tiers
+const PRIZE_TIERS = [
+  { label: 'Voucher 10K',  value: 10000,  probability: 0.35 },
+  { label: 'Voucher 20K',  value: 20000,  probability: 0.30 },
+  { label: 'Voucher 30K',  value: 30000,  probability: 0.20 },
+  { label: 'Voucher 50K',  value: 50000,  probability: 0.10 },
+  { label: 'Voucher 100K', value: 100000, probability: 0.05 },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let phoneNumber  = '';
+let fbSender     = '';
+let placedCount  = 0;
+let timeLeft     = GAME_TIME;
+let timerInterval = null;
+let isPaused     = false;
+let isGameOver   = false;
+let selectedPieceIdx = null;
+let hintUsed     = false;
+let pieces       = [];  // { id, row, col, placed }
+let timerCallback= null;
+let startTime    = 0;
+let imageLoaded  = false;
+let fullImage    = null;
+
+// ============================================================
+// PARTICLE SYSTEM (ambient background)
+// ============================================================
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animId;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function spawnParticle() {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: canvas.height + 10,
+      size: 2 + Math.random() * 4,
+      speedY: -(0.4 + Math.random() * 0.8),
+      speedX: (Math.random() - 0.5) * 0.3,
+      alpha: 0.2 + Math.random() * 0.3,
+      color: ['#b71029','#ffc967','#ff973e','#ff7576'][Math.floor(Math.random()*4)]
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (Math.random() < 0.03) spawnParticle();
+    particles = particles.filter(p => p.y > -20);
+    for (const p of particles) {
+      p.y += p.speedY;
+      p.x += p.speedX;
+      p.alpha -= 0.001;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    animId = requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ============================================================
+// SCREEN TRANSITIONS
+// ============================================================
+function switchScreen(from, to) {
+  const outEl = document.getElementById('screen-' + from);
+  const inEl  = document.getElementById('screen-' + to);
+  if (!outEl || !inEl) return;
+
+  outEl.style.transition = 'opacity 200ms ease-out';
+  outEl.style.opacity = '0';
+
+  setTimeout(() => {
+    outEl.classList.remove('active');
+    outEl.style.display = 'none';
+    outEl.style.opacity = '';
+
+    inEl.style.display = 'flex';
+    inEl.style.opacity = '0';
+    requestAnimationFrame(() => {
+      inEl.style.transition = 'opacity 300ms ease-out';
+      inEl.style.opacity = '1';
+      inEl.classList.add('active');
+    });
+  }, 200);
+}
+
+// ============================================================
+// LEAD SUBMISSION
+// ============================================================
+function validatePhone(num) {
+  return /^0[3-9]\d{8}$/.test(num);
+}
+
+function submitLead() {
+  const input = document.getElementById('input-phone');
+  const errorEl = document.getElementById('phone-error');
+  const btn    = document.getElementById('btn-start-lead');
+  const phone  = input.value.trim();
+
+  if (!validatePhone(phone)) {
+    input.classList.add('error');
+    errorEl.style.display = 'flex';
+    input.focus();
+    setTimeout(() => input.classList.remove('error'), 500);
+    return;
+  }
+
+  input.classList.remove('error');
+  errorEl.style.display = 'none';
+  phoneNumber = phone;
+
+  // Parse FB sender from URL
+  const params = new URLSearchParams(window.location.search);
+  fbSender = params.get('fb_sender') || '';
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> Đang lưu...';
+
+  // Save lead
+  saveLead(phone).then(() => {
+    switchScreen('lead', 'start');
+  }).catch(() => {
+    // Still proceed even if save fails
+    switchScreen('lead', 'start');
+  });
+}
+
+async function saveLead(phone) {
+  const params = { phone, source: 'WEB' };
+  if (fbSender) params.fb_sender = fbSender;
+
+  // Try webhook endpoint
+  try {
+    // Try calling the webhook API (if deployed)
+    await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    });
+  } catch (e) {
+    console.log('Lead save skipped (no webhook):', e.message);
+  }
+}
+
+// ============================================================
+// GAME FLOW
+// ============================================================
+function startGame() {
+  if (!phoneNumber) {
+    // If coming directly without phone, use a guest ID
+    phoneNumber = 'GUEST_' + Math.random().toString(36).substr(2, 8);
+  }
+  switchScreen('start', 'game');
+  initGame();
+}
+
+function initGame() {
+  // Reset state
+  placedCount  = 0;
+  timeLeft     = GAME_TIME;
+  isPaused     = false;
+  isGameOver   = false;
+  selectedPieceIdx = null;
+  hintUsed     = false;
+  pieces       = [];
+  startTime    = Date.now();
+
+  // Build pieces array
+  for (let r = 0; r < GRID_SIZE; r++) {
+    for (let c = 0; c < GRID_SIZE; c++) {
+      pieces.push({ id: r * GRID_SIZE + c, row: r, col: c, placed: false });
+    }
+  }
+
+  // Load image
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    fullImage = img;
+    imageLoaded = true;
+    buildPuzzleBoard();
+    buildPieceTray();
+    updateHUD();
+    updateProgress();
+    startCountdown();
+  };
+  img.onerror = () => {
+    // Fallback: generate a gradient canvas
+    fullImage = createFallbackImage();
+    imageLoaded = true;
+    buildPuzzleBoard();
+    buildPieceTray();
+    updateHUD();
+    updateProgress();
+    startCountdown();
+  };
+  img.src = GAME_IMAGE + '&cachebust=' + Date.now();
+}
+
+function createFallbackImage() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 600;
+  const ctx = c.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 600, 600);
+  grad.addColorStop(0, '#b71029');
+  grad.addColorStop(0.5, '#ffc967');
+  grad.addColorStop(1, '#8e4900');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 600, 600);
+  // Add decorative circles
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.beginPath(); ctx.arc(300, 200, 120, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(150, 400, 80, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(480, 420, 60, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  ctx.font = 'bold 48px Plus Jakarta Sans';
+  ctx.textAlign = 'center';
+  ctx.fillText('MA YCHA', 300, 320);
+  return c;
+}
+
+// ============================================================
+// 3-2-1 COUNTDOWN
+// ============================================================
+function startCountdown() {
+  const overlay = document.getElementById('countdown-overlay');
+  const numEl   = document.getElementById('countdown-number');
+  overlay.style.display = 'flex';
+  let count = 3;
+
+  function tick() {
+    if (count > 0) {
+      numEl.textContent = count;
+      numEl.style.animation = 'none';
+      numEl.offsetHeight; // reflow
+      numEl.style.animation = 'bounceIn 600ms var(--spring-bounce) both';
+      count--;
+      setTimeout(tick, 800);
+    } else {
+      numEl.textContent = 'GO!';
+      numEl.style.animation = 'none';
+      numEl.offsetHeight;
+      numEl.style.animation = 'bounceIn 600ms var(--spring-bounce) both';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        startTimer();
+      }, 600);
+    }
+  }
+  tick();
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (isPaused || isGameOver) return;
+    timeLeft--;
+    updateHUD();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+function updateHUD() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  const timerEl = document.getElementById('timer-display');
+  timerEl.textContent = `${mins}:${String(secs).padStart(2, '0')}`;
+
+  // Warning states
+  timerEl.classList.remove('warning', 'danger');
+  if (timeLeft <= 10) {
+    timerEl.classList.add('danger');
+  } else if (timeLeft <= 20) {
+    timerEl.classList.add('warning');
+  }
+
+  // Score
+  document.getElementById('score-display').textContent = `${placedCount}/${TOTAL_PIECES}`;
+}
+
+function updateProgress() {
+  const pct = Math.round((placedCount / TOTAL_PIECES) * 100);
+  document.getElementById('progress-text').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ============================================================
+// PUZZLE BOARD
+// ============================================================
+function buildPuzzleBoard() {
+  const grid = document.getElementById('puzzle-grid');
+  grid.innerHTML = '';
+
+  const cellSize = 600 / GRID_SIZE; // pixels per cell in original image
+
+  for (let r = 0; r < GRID_SIZE; r++) {
+    for (let c = 0; c < GRID_SIZE; c++) {
+      const slot = document.createElement('div');
+      slot.className = 'puzzle-slot';
+      slot.dataset.row = r;
+      slot.dataset.col = c;
+      slot.dataset.pieceId = r * GRID_SIZE + c;
+      slot.onclick = () => onSlotClick(r, c);
+      grid.appendChild(slot);
+    }
+  }
+}
+
+function onSlotClick(row, col) {
+  if (isPaused || isGameOver) return;
+  if (selectedPieceIdx === null) return;
+
+  const pieceId = selectedPieceIdx;
+  const piece = pieces[pieceId];
+
+  if (piece.placed) return;
+
+  // Check if correct slot
+  if (piece.row === row && piece.col === col) {
+    placePiece(pieceId, row, col);
+  } else {
+    // Wrong slot — shake the slot
+    const slots = document.querySelectorAll('.puzzle-slot');
+    const idx = row * GRID_SIZE + col;
+    slots[idx].style.animation = 'shake 0.4s var(--spring-snappy)';
+    setTimeout(() => { slots[idx].style.animation = ''; }, 400);
+    deselectPiece();
+  }
+}
+
+function placePiece(pieceId, row, col) {
+  const piece = pieces[pieceId];
+  piece.placed = true;
+  placedCount++;
+
+  // Draw piece on slot
+  const slots = document.querySelectorAll('.puzzle-slot');
+  const idx = row * GRID_SIZE + col;
+  const slot = slots[idx];
+
+  const cellSize = 600 / GRID_SIZE;
+  const canvas = renderPieceCanvas(pieceId, cellSize, cellSize);
+  canvas.style.animation = 'pieceCorrect 400ms var(--spring-bounce)';
+
+  slot.innerHTML = '';
+  slot.appendChild(canvas);
+  slot.classList.add('filled');
+
+  // Hide from tray
+  const trayItems = document.querySelectorAll('.piece-item');
+  trayItems.forEach(item => {
+    if (parseInt(item.dataset.pieceId) === pieceId) {
+      item.classList.add('placed');
+      item.classList.remove('selected');
+    }
+  });
+
+  selectedPieceIdx = null;
+  updateHUD();
+  updateProgress();
+
+  // Check win
+  if (placedCount === TOTAL_PIECES) {
+    clearInterval(timerInterval);
+    endGame(true);
+  }
+}
+
+// ============================================================
+// PIECE TRAY
+// ============================================================
+function buildPieceTray() {
+  const tray = document.getElementById('piece-tray');
+  tray.innerHTML = '';
+
+  // Shuffle for random display order
+  const shuffled = [...pieces].filter(p => !p.placed).sort(() => Math.random() - 0.5);
+  const pieceSize = 80;
+
+  shuffled.forEach(piece => {
+    const item = document.createElement('div');
+    item.className = 'piece-item';
+    item.dataset.pieceId = piece.id;
+    item.style.width  = pieceSize + 'px';
+    item.style.height = pieceSize + 'px';
+
+    const canvas = renderPieceCanvas(piece.id, pieceSize, pieceSize);
+    item.appendChild(canvas);
+
+    item.onclick = () => {
+      if (isPaused || isGameOver) return;
+      if (piece.placed) return;
+      selectPiece(piece.id);
+    };
+
+    tray.appendChild(item);
+  });
+}
+
+function selectPiece(pieceId) {
+  if (selectedPieceIdx === pieceId) {
+    deselectPiece();
+    return;
+  }
+
+  deselectPiece();
+  selectedPieceIdx = pieceId;
+
+  const items = document.querySelectorAll('.piece-item');
+  items.forEach(item => {
+    if (parseInt(item.dataset.pieceId) === pieceId) {
+      item.classList.add('selected');
+      item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  });
+
+  // Highlight the target slot
+  const piece = pieces[pieceId];
+  const slots = document.querySelectorAll('.puzzle-slot');
+  slots.forEach(s => s.classList.remove('target'));
+  const targetIdx = piece.row * GRID_SIZE + piece.col;
+  if (!piece.placed) slots[targetIdx].classList.add('target');
+}
+
+function deselectPiece() {
+  selectedPieceIdx = null;
+  document.querySelectorAll('.piece-item').forEach(i => i.classList.remove('selected'));
+  document.querySelectorAll('.puzzle-slot').forEach(s => s.classList.remove('target'));
+}
+
+// ============================================================
+// CANVAS RENDERER
+// ============================================================
+function renderPieceCanvas(pieceId, w, h) {
+  const canvas = document.createElement('canvas');
+  canvas.width  = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+
+  if (fullImage) {
+    const cellW = fullImage.width  / GRID_SIZE;
+    const cellH = fullImage.height / GRID_SIZE;
+    const row   = Math.floor(pieceId / GRID_SIZE);
+    const col   = pieceId % GRID_SIZE;
+
+    ctx.drawImage(
+      fullImage,
+      col * cellW, row * cellH,
+      cellW, cellH,
+      0, 0,
+      w, h
+    );
+  } else {
+    // Fallback gradient
+    const grad = ctx.createLinearGradient(0, 0, w, h);
+    const hue = (pieceId / TOTAL_PIECES) * 60 + 10;
+    grad.addColorStop(0, `hsl(${hue}, 70%, 60%)`);
+    grad.addColorStop(1, `hsl(${hue+20}, 60%, 50%)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  return canvas;
+}
+
+// ============================================================
+// HINT
+// ============================================================
+function useHint() {
+  if (isPaused || isGameOver || hintUsed) return;
+  hintUsed = true;
+  document.getElementById('btn-hint').style.opacity = '0.5';
+  document.getElementById('btn-hint').style.pointerEvents = 'none';
+
+  // Find first unplaced piece
+  const unplaced = pieces.find(p => !p.placed);
+  if (!unplaced) return;
+
+  // Auto-select it
+  selectPiece(unplaced.id);
+
+  // Flash the correct slot
+  const slots = document.querySelectorAll('.puzzle-slot');
+  const targetIdx = unplaced.row * GRID_SIZE + unplaced.col;
+  slots[targetIdx].classList.add('target');
+  slots[targetIdx].style.animation = 'glowPulse 1s ease-in-out 3';
+  setTimeout(() => { slots[targetIdx].style.animation = ''; }, 3000);
+}
+
+// ============================================================
+// PAUSE / RESUME
+// ============================================================
+function togglePause() {
+  if (isGameOver) return;
+  if (isPaused) {
+    resumeGame();
+  } else {
+    pauseGame();
+  }
+}
+
+function pauseGame() {
+  isPaused = true;
+  clearInterval(timerInterval);
+  document.getElementById('pause-modal').classList.add('active');
+  document.getElementById('pause-icon').textContent = 'play_arrow';
+  document.getElementById('pause-label').textContent = 'Tiếp tục';
+}
+
+function resumeGame() {
+  isPaused = false;
+  document.getElementById('pause-modal').classList.remove('active');
+  document.getElementById('pause-icon').textContent = 'pause';
+  document.getElementById('pause-label').textContent = 'Tạm dừng';
+  startTimer();
+}
+
+function confirmQuit() {
+  pauseGame();
+}
+
+function quitGame() {
+  clearInterval(timerInterval);
+  document.getElementById('pause-modal').classList.remove('active');
+  endGame(false);
+}
+
+function resetGame() {
+  clearInterval(timerInterval);
+  placedCount  = 0;
+  timeLeft     = GAME_TIME;
+  isPaused     = false;
+  isGameOver   = false;
+  selectedPieceIdx = null;
+  hintUsed     = false;
+  document.getElementById('btn-hint').style.opacity = '1';
+  document.getElementById('btn-hint').style.pointerEvents = 'auto';
+}
+
+// ============================================================
+// END GAME
+// ============================================================
+function endGame(completed) {
+  isGameOver = true;
+  clearInterval(timerInterval);
+
+  const elapsedMs = Date.now() - startTime;
+  const elapsedSec = Math.floor(elapsedMs / 1000);
+
+  if (completed) {
+    const prize = pickPrize();
+    const code  = generateVoucherCode();
+    showResult(completed, elapsedSec, prize, code);
+  } else {
+    showResult(completed, elapsedSec, null, null);
+  }
+
+  // Save result
+  saveResult(completed, elapsedMs, completed ? pickPrize() : null, completed ? generateVoucherCode() : null);
+}
+
+function pickPrize() {
+  const rand = Math.random();
+  let cumulative = 0;
+  for (const tier of PRIZE_TIERS) {
+    cumulative += tier.probability;
+    if (rand <= cumulative) return tier;
+  }
+  return PRIZE_TIERS[0];
+}
+
+function generateVoucherCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'MCJIG';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+function showResult(completed, timeSec, prize, code) {
+  switchScreen('game', 'result');
+
+  const titleEl    = document.getElementById('result-title');
+  const eyebrowEl  = document.getElementById('result-eyebrow');
+  const timeEl     = document.getElementById('result-time');
+  const prizeEl    = document.getElementById('result-prize');
+  const codeEl     = document.getElementById('result-code');
+  const headerEl   = document.getElementById('result-header');
+  const bentoEl    = document.getElementById('result-bento');
+  const actionsEl  = document.getElementById('result-actions');
+  const expiryEl   = document.getElementById('result-expiry');
+  const voucherEl  = document.getElementById('voucher-card');
+
+  // Reset animations
+  [headerEl, bentoEl, actionsEl, expiryEl, voucherEl].forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  });
+
+  const mins = Math.floor(timeSec / 60);
+  const secs = timeSec % 60;
+  timeEl.textContent = `${mins}:${String(secs).padStart(2, '0')}`;
+
+  if (completed) {
+    titleEl.textContent = 'Chúc mừng!';
+    eyebrowEl.textContent = 'Thắng cuộc!';
+    eyebrowEl.style.color = 'var(--color-primary)';
+    titleEl.style.color = 'var(--color-primary)';
+    prizeEl.textContent = prize.label;
+    codeEl.textContent  = code;
+
+    // Animate voucher card
+    voucherEl.style.animation = 'resultPop 600ms var(--spring-bounce) 400ms both';
+
+    // Fire confetti
+    setTimeout(() => fireConfetti(), 200);
+
+    // Send to webhook
+    saveResult(true, timeSec * 1000, prize, code);
+  } else {
+    titleEl.textContent = 'Hết giờ!';
+    eyebrowEl.textContent = 'Chưa hoàn thành';
+    eyebrowEl.style.color = 'var(--color-on-surface-variant)';
+    titleEl.style.color = 'var(--color-on-surface-variant)';
+    prizeEl.textContent = 'Không có quà';
+    codeEl.textContent  = '— — — —';
+    voucherEl.style.display = 'none';
+  }
+}
+
+function fireConfetti() {
+  const container = document.getElementById('result-confetti');
+  container.innerHTML = '';
+  const colors = ['#b71029','#ffc967','#ff973e','#ff7576','#795500','#fff'];
+
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = 6 + Math.random() * 10;
+    const isCircle = Math.random() > 0.5;
+    const delay = Math.random() * 1;
+    const duration = 1.5 + Math.random() * 2;
+    const left = Math.random() * 100;
+
+    el.className = 'confetti-particle';
+    el.style.cssText = `
+      left: ${left}%;
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      border-radius: ${isCircle ? '50%' : '2px'};
+      animation: confettiFall ${duration}s ease-out ${delay}s forwards;
+    `;
+    container.appendChild(el);
+  }
+
+  // Clean up after animation
+  setTimeout(() => { container.innerHTML = ''; }, 5000);
+}
+
+async function saveResult(completed, timeMs, prize, code) {
+  const params = {
+    phone: phoneNumber,
+    time_ms: timeMs,
+    time_seconds: Math.floor(timeMs / 1000),
+    completed
+  };
+  if (fbSender) params.fb_sender = fbSender;
+  if (completed && prize) {
+    params.prize       = prize.label;
+    params.prize_value = prize.value;
+    params.prize_code  = code;
+  }
+
+  try {
+    await fetch('/api/game-result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    });
+  } catch (e) {
+    console.log('Result save skipped (no webhook):', e.message);
+  }
+}
+
+// ============================================================
+// REPLAY
+// ============================================================
+function replayGame() {
+  // Reset voucher card visibility
+  document.getElementById('voucher-card').style.display = '';
+
+  // Reset hint button
+  document.getElementById('btn-hint').style.opacity = '1';
+  document.getElementById('btn-hint').style.pointerEvents = 'auto';
+
+  resetGame();
+  switchScreen('result', 'game');
+  initGame();
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function shareResult() {
+  const text = `🧋🎮 Tôi vừa chơi Speed Jigsaw Maycha — Ghép hình nhanh nhất để nhận Voucher trà sữa! Bạn thử không?`;
+  const encoded = encodeURIComponent(text);
+  const url = `https://www.facebook.com/sharer/sharer.php?quote=${encoded}`;
+
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    window.location.href = url;
+  } else {
+    window.open(url, '_blank', 'width=600,height=500');
+  }
+}
+
+function viewLeaderboard() {
+  // Placeholder — can link to leaderboard page
+  alert('🏆 Bảng xếp hạng đang cập nhật! Cảm ơn bạn đã chơi.');
+}
+
+// ============================================================
+// INPUT HANDLING
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('input-phone');
+  if (input) {
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+      document.getElementById('phone-error').style.display = 'none';
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitLead();
+    });
+  }
+
+  // Hide loading
+  setTimeout(() => {
+    const loading = document.getElementById('loading');
+    if (loading) loading.style.display = 'none';
+
+    // Check if coming from Messenger with sender
+    const params = new URLSearchParams(window.location.search);
+    const sender = params.get('fb_sender');
+    if (sender) {
+      fbSender = sender;
+      // Skip lead screen, go straight to start
+      document.getElementById('screen-lead').style.display = 'none';
+      document.getElementById('screen-start').style.display = 'flex';
+      document.getElementById('screen-start').classList.add('active');
+    } else {
+      // Show lead screen
+      document.getElementById('screen-lead').style.display = 'flex';
+      document.getElementById('screen-lead').classList.add('active');
+    }
+  }, 800);
+});
+
+// ============================================================
+// PREVENT SCROLL BOUNCE ON iOS
+// ============================================================
+document.addEventListener('touchmove', (e) => {
+  if (e.target.closest('.piece-tray')) return;
+  if (isGameOver) return;
+}, { passive: true });
+</script>
+</body>
+</html>
