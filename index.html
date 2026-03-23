@@ -865,6 +865,8 @@ body {
                 onclick="useHint()" id="btn-hint">
           <span class="material-symbols-outlined text-lg" style="color:var(--color-secondary)">lightbulb</span>
           <span>Gợi ý</span>
+          <span id="hint-badge" class="text-xs px-1.5 py-0.5 rounded-full font-black"
+                style="background:var(--color-primary); color:white; min-width:20px; text-align:center">5</span>
         </button>
       </div>
 
@@ -1052,7 +1054,7 @@ let timerInterval = null;
 let isPaused     = false;
 let isGameOver   = false;
 let selectedPieceIdx = null;
-let hintUsed     = false;
+let hintCount    = 5;
 let pieces       = [];  // { id, row, col, placed }
 let timerCallback= null;
 let startTime    = 0;
@@ -1210,9 +1212,15 @@ function initGame() {
   isPaused     = false;
   isGameOver   = false;
   selectedPieceIdx = null;
-  hintUsed     = false;
+  hintCount    = 5;
   pieces       = [];
   startTime    = Date.now();
+
+  // Reset hint button UI
+  const hintBtn = document.getElementById('btn-hint');
+  const hintBadge = document.getElementById('hint-badge');
+  if (hintBtn) { hintBtn.style.opacity = '1'; hintBtn.style.pointerEvents = 'auto'; }
+  if (hintBadge) hintBadge.textContent = '5';
 
   // Build pieces array
   for (let r = 0; r < GRID_SIZE; r++) {
@@ -1476,12 +1484,7 @@ function selectPiece(pieceId) {
     }
   });
 
-  // Highlight the target slot
-  const piece = pieces[pieceId];
-  const slots = document.querySelectorAll('.puzzle-slot');
-  slots.forEach(s => s.classList.remove('target'));
-  const targetIdx = piece.row * GRID_SIZE + piece.col;
-  if (!piece.placed) slots[targetIdx].classList.add('target');
+  // Target slot is only highlighted via Gợi ý button, not on piece tap
 }
 
 function deselectPiece() {
@@ -1727,10 +1730,18 @@ function renderPieceCanvas(pieceId, w, h) {
 // HINT
 // ============================================================
 function useHint() {
-  if (isPaused || isGameOver || hintUsed) return;
-  hintUsed = true;
-  document.getElementById('btn-hint').style.opacity = '0.5';
-  document.getElementById('btn-hint').style.pointerEvents = 'none';
+  if (isPaused || isGameOver || hintCount <= 0) return;
+  hintCount--;
+
+  // Update counter badge on button
+  const badge = document.getElementById('hint-badge');
+  if (badge) badge.textContent = hintCount;
+
+  // Deactivate button when used up
+  if (hintCount <= 0) {
+    document.getElementById('btn-hint').style.opacity = '0.4';
+    document.getElementById('btn-hint').style.pointerEvents = 'none';
+  }
 
   // Find first unplaced piece
   const unplaced = pieces.find(p => !p.placed);
@@ -1792,9 +1803,11 @@ function resetGame() {
   isPaused     = false;
   isGameOver   = false;
   selectedPieceIdx = null;
-  hintUsed     = false;
+  hintCount    = 5;
   document.getElementById('btn-hint').style.opacity = '1';
   document.getElementById('btn-hint').style.pointerEvents = 'auto';
+  const badge = document.getElementById('hint-badge');
+  if (badge) badge.textContent = '5';
 }
 
 // ============================================================
