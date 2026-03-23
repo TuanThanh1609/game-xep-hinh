@@ -282,6 +282,8 @@ body {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(6, 1fr);
   gap: 2px;
+  width: 100%;
+  aspect-ratio: 1;
 }
 .puzzle-slot {
   background: rgba(255,255,255,0.25);
@@ -296,7 +298,6 @@ body {
   background: rgba(255,255,255,0.4);
 }
 .puzzle-slot.filled {
-  background: transparent;
   cursor: default;
 }
 .puzzle-slot.target {
@@ -846,7 +847,7 @@ body {
 
       <!-- Preview Bubble -->
       <div class="preview-bubble" id="preview-bubble">
-        <img id="preview-img" src="" alt="Preview">
+        <img id="preview-img" alt="Preview">
         <div class="preview-bubble-label">XEM TRƯỚC</div>
       </div>
     </div>
@@ -1025,7 +1026,7 @@ body {
 // ============================================================
 // CONFIG
 // ============================================================
-const GAME_IMAGE = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAuNlxPWkESnzzgoU6RnVhBV-6IieILFA3z9b0PK0iR8fPbwvJ9cA9nVVkQtVhuAqSI6Qq_I8SvlifAW-OgquUKeLVv4sHWyrHv0_vAR8XoGvBgL0v1y4jRSFNysDENv4MJkiIcO4I05pTibTsvtGnRMHe83s4TuyuQgfESxMRxbi-HONsO6KNEG4erb72FEQe6QRrCW9EtS-DEgvWdDjeALG9IToJsJNpjMPnAQ7xOrHyP1BuVNHMmB9V2WnG6BrtUSV_df2lo6b8';
+// Puzzle image: generated inline — no external URL needed
 const GRID_SIZE  = 6;
 const TOTAL_PIECES = GRID_SIZE * GRID_SIZE; // 36
 const GAME_TIME   = 60; // seconds
@@ -1220,51 +1221,21 @@ function initGame() {
     }
   }
 
-  // Load image
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    fullImage = img;
-    imageLoaded = true;
-    buildPuzzleBoard();
-    buildPieceTray();
-    updateHUD();
-    updateProgress();
-    startCountdown();
-  };
-  img.onerror = () => {
-    // Fallback: generate a gradient canvas
-    fullImage = createFallbackImage();
-    imageLoaded = true;
-    buildPuzzleBoard();
-    buildPieceTray();
-    updateHUD();
-    updateProgress();
-    startCountdown();
-  };
-  img.src = GAME_IMAGE + '&cachebust=' + Date.now();
-}
+  // Generate puzzle image inline (no external URL dependency)
+  fullImage = buildPuzzleImage();
+  imageLoaded = true;
 
-function createFallbackImage() {
-  const c = document.createElement('canvas');
-  c.width = c.height = 600;
-  const ctx = c.getContext('2d');
-  const grad = ctx.createLinearGradient(0, 0, 600, 600);
-  grad.addColorStop(0, '#b71029');
-  grad.addColorStop(0.5, '#ffc967');
-  grad.addColorStop(1, '#8e4900');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 600, 600);
-  // Add decorative circles
-  ctx.fillStyle = 'rgba(255,255,255,0.15)';
-  ctx.beginPath(); ctx.arc(300, 200, 120, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(150, 400, 80, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(480, 420, 60, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.8)';
-  ctx.font = 'bold 48px Plus Jakarta Sans';
-  ctx.textAlign = 'center';
-  ctx.fillText('MA YCHA', 300, 320);
-  return c;
+  // Set preview bubble image
+  const previewImg = document.getElementById('preview-img');
+  if (previewImg && fullImage) {
+    previewImg.src = fullImage.toDataURL();
+  }
+
+  buildPuzzleBoard();
+  buildPieceTray();
+  updateHUD();
+  updateProgress();
+  startCountdown();
 }
 
 // ============================================================
@@ -1345,7 +1316,9 @@ function buildPuzzleBoard() {
   const grid = document.getElementById('puzzle-grid');
   grid.innerHTML = '';
 
-  const cellSize = 600 / GRID_SIZE; // pixels per cell in original image
+  // Export puzzle image to dataURL for CSS background usage
+  const puzzleDataURL = fullImage ? fullImage.toDataURL() : null;
+  const cellPct = 100 / GRID_SIZE; // 16.667%
 
   for (let r = 0; r < GRID_SIZE; r++) {
     for (let c = 0; c < GRID_SIZE; c++) {
@@ -1355,6 +1328,17 @@ function buildPuzzleBoard() {
       slot.dataset.col = c;
       slot.dataset.pieceId = r * GRID_SIZE + c;
       slot.onclick = () => onSlotClick(r, c);
+
+      // Ghost preview: CSS background shows the correct piece
+      if (puzzleDataURL) {
+        slot.style.backgroundImage = `url(${puzzleDataURL})`;
+        slot.style.backgroundSize = `${GRID_SIZE * 100}%`;
+        slot.style.backgroundPosition = `${c * cellPct}% ${r * cellPct}%`;
+        slot.style.backgroundRepeat = 'no-repeat';
+        slot.style.backgroundColor = 'rgba(255,255,255,0.55)';
+        slot.style.opacity = '0.35';
+      }
+
       grid.appendChild(slot);
     }
   }
@@ -1387,17 +1371,33 @@ function placePiece(pieceId, row, col) {
   piece.placed = true;
   placedCount++;
 
-  // Draw piece on slot
   const slots = document.querySelectorAll('.puzzle-slot');
   const idx = row * GRID_SIZE + col;
   const slot = slots[idx];
 
-  const cellSize = 600 / GRID_SIZE;
-  const canvas = renderPieceCanvas(pieceId, cellSize, cellSize);
-  canvas.style.animation = 'pieceCorrect 400ms var(--spring-bounce)';
+  const puzzleDataURL = fullImage ? fullImage.toDataURL() : null;
+  const cellPct = 100 / GRID_SIZE;
 
+  // Show full piece — replace ghost with solid image
   slot.innerHTML = '';
-  slot.appendChild(canvas);
+  slot.style.backgroundImage = '';
+  slot.style.backgroundColor = '';
+  slot.style.opacity = '1';
+  slot.style.borderRadius = '4px';
+
+  if (puzzleDataURL) {
+    const div = document.createElement('div');
+    div.style.width = '100%';
+    div.style.height = '100%';
+    div.style.borderRadius = '4px';
+    div.style.backgroundImage = `url(${puzzleDataURL})`;
+    div.style.backgroundSize = `${GRID_SIZE * 100}%`;
+    div.style.backgroundPosition = `${col * cellPct}% ${row * cellPct}%`;
+    div.style.backgroundRepeat = 'no-repeat';
+    div.style.animation = 'pieceCorrect 400ms var(--spring-bounce)';
+    slot.appendChild(div);
+  }
+
   slot.classList.add('filled');
 
   // Hide from tray
@@ -1427,19 +1427,27 @@ function buildPieceTray() {
   const tray = document.getElementById('piece-tray');
   tray.innerHTML = '';
 
+  // Export puzzle image once for all pieces
+  const puzzleDataURL = fullImage ? fullImage.toDataURL() : null;
+  const cellPct = 100 / GRID_SIZE; // 16.667%
+
   // Shuffle for random display order
   const shuffled = [...pieces].filter(p => !p.placed).sort(() => Math.random() - 0.5);
-  const pieceSize = 80;
 
   shuffled.forEach(piece => {
     const item = document.createElement('div');
     item.className = 'piece-item';
     item.dataset.pieceId = piece.id;
-    item.style.width  = pieceSize + 'px';
-    item.style.height = pieceSize + 'px';
+    item.style.width  = '80px';
+    item.style.height = '80px';
 
-    const canvas = renderPieceCanvas(piece.id, pieceSize, pieceSize);
-    item.appendChild(canvas);
+    // CSS background — instant, no canvas overhead
+    if (puzzleDataURL) {
+      item.style.backgroundImage = `url(${puzzleDataURL})`;
+      item.style.backgroundSize = `${GRID_SIZE * 100}%`;
+      item.style.backgroundPosition = `${piece.col * cellPct}% ${piece.row * cellPct}%`;
+      item.style.backgroundRepeat = 'no-repeat';
+    }
 
     item.onclick = () => {
       if (isPaused || isGameOver) return;
@@ -1483,6 +1491,189 @@ function deselectPiece() {
 }
 
 // ============================================================
+// POLYFILLS
+// ============================================================
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+    if (typeof r === 'number') r = {tl: r, tr: r, br: r, bl: r};
+    this.moveTo(x + r.tl, y);
+    this.lineTo(x + w - r.tr, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r.tr);
+    this.lineTo(x + w, y + h - r.br);
+    this.quadraticCurveTo(x + w, y + h, x + w - r.br, y + h);
+    this.lineTo(x + r.bl, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r.bl);
+    this.lineTo(x, y + r.tl);
+    this.quadraticCurveTo(x, y, x + r.tl, y);
+    this.closePath();
+    return this;
+  };
+}
+
+// ============================================================
+// PUZZLE IMAGE GENERATOR (inline SVG — no external image needed)
+// ============================================================
+
+// Generates the full puzzle image as a canvas
+function buildPuzzleImage() {
+  const size = 600;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+
+  // Background: warm cream gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, size, size);
+  bgGrad.addColorStop(0, '#fcf6ed');
+  bgGrad.addColorStop(1, '#ede7dd');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, size, size);
+
+  // Draw festive elements using SVG-like paths
+
+  // Large bubble tea cup — center
+  drawBubbleTeaCup(ctx, 300, 280, 160);
+
+  // Decorative circles (boba pearls)
+  const pearls = [
+    { x: 100, y: 150, r: 22 }, { x: 180, y: 100, r: 16 },
+    { x: 450, y: 130, r: 20 }, { x: 500, y: 200, r: 14 },
+    { x: 80,  y: 380, r: 18 }, { x: 520, y: 350, r: 24 },
+    { x: 160, y: 480, r: 14 }, { x: 440, y: 470, r: 18 },
+    { x: 300, y: 520, r: 12 }, { x: 60,  y: 250, r: 10 },
+    { x: 540, y: 280, r: 12 }, { x: 240, y: 60,  r: 10 },
+  ];
+  pearls.forEach(p => {
+    const g = ctx.createRadialGradient(p.x - p.r*0.3, p.y - p.r*0.3, 0, p.x, p.y, p.r);
+    g.addColorStop(0, '#c0392b');
+    g.addColorStop(1, '#7b241c');
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+  });
+
+  // Grid lines (subtle, to help players)
+  ctx.strokeStyle = 'rgba(183, 16, 41, 0.15)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i < GRID_SIZE; i++) {
+    const pos = (i / GRID_SIZE) * size;
+    ctx.beginPath(); ctx.moveTo(pos, 0); ctx.lineTo(pos, size); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, pos); ctx.lineTo(size, pos); ctx.stroke();
+  }
+
+  // Text: MA YCHA
+  ctx.save();
+  ctx.font = 'bold 52px Plus Jakarta Sans';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // Shadow
+  ctx.fillStyle = 'rgba(183, 16, 41, 0.25)';
+  ctx.fillText('MA YCHA', 304, 284);
+  // Main text
+  ctx.fillStyle = '#b71029';
+  ctx.fillText('MA YCHA', 300, 280);
+  ctx.restore();
+
+  // Decorative ribbon / banner at top
+  ctx.save();
+  ctx.fillStyle = '#b71029';
+  roundRect(ctx, 140, 20, 320, 44, 10);
+  ctx.fill();
+  ctx.fillStyle = '#ffc967';
+  ctx.font = 'bold 18px Plus Jakarta Sans';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('FESTIVAL 30/4 - 1/5', 300, 42);
+  ctx.restore();
+
+  // Stars / sparkles
+  const stars = [{x:50,y:50},{x:550,y:80},{x:40,y:500},{x:560,y:500}];
+  stars.forEach(s => {
+    drawStar(ctx, s.x, s.y, 8, '#ffc967');
+  });
+
+  return c;
+}
+
+function drawBubbleTeaCup(ctx, x, y, size) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  // Cup body
+  const cupGrad = ctx.createLinearGradient(-size/2, -size/2, size/2, size/2);
+  cupGrad.addColorStop(0, '#ff7576');
+  cupGrad.addColorStop(1, '#b71029');
+  ctx.fillStyle = cupGrad;
+  ctx.beginPath();
+  ctx.moveTo(-size * 0.35, -size * 0.25);
+  ctx.lineTo(-size * 0.28, size * 0.4);
+  ctx.quadraticCurveTo(0, size * 0.5, size * 0.28, size * 0.4);
+  ctx.lineTo(size * 0.35, -size * 0.25);
+  ctx.closePath();
+  ctx.fill();
+
+  // Cup lid
+  ctx.fillStyle = '#ffd700';
+  ctx.beginPath();
+  ctx.ellipse(0, -size * 0.28, size * 0.38, size * 0.1, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(0, -size * 0.32, size * 0.22, size * 0.06, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Straw
+  ctx.fillStyle = '#795500';
+  ctx.beginPath();
+  ctx.roundRect(-size * 0.04, -size * 0.5, size * 0.08, size * 0.7, 4);
+  ctx.fill();
+  ctx.fillStyle = '#ffc967';
+  ctx.beginPath();
+  ctx.roundRect(-size * 0.04, -size * 0.5, size * 0.08, size * 0.2, 4);
+  ctx.fill();
+
+  // Tea liquid
+  ctx.fillStyle = 'rgba(255, 193, 103, 0.6)';
+  ctx.beginPath();
+  ctx.moveTo(-size * 0.30, -size * 0.10);
+  ctx.lineTo(-size * 0.24, size * 0.34);
+  ctx.quadraticCurveTo(0, size * 0.42, size * 0.24, size * 0.34);
+  ctx.lineTo(size * 0.30, -size * 0.10);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawStar(ctx, cx, cy, r, color) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  for (let i = 0; i < 5; i++) {
+    const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+// ============================================================
 // CANVAS RENDERER
 // ============================================================
 function renderPieceCanvas(pieceId, w, h) {
@@ -1491,7 +1682,7 @@ function renderPieceCanvas(pieceId, w, h) {
   canvas.height = h;
   const ctx = canvas.getContext('2d');
 
-  if (fullImage) {
+  if (fullImage && fullImage.width > 0) {
     const cellW = fullImage.width  / GRID_SIZE;
     const cellH = fullImage.height / GRID_SIZE;
     const row   = Math.floor(pieceId / GRID_SIZE);
@@ -1505,14 +1696,29 @@ function renderPieceCanvas(pieceId, w, h) {
       w, h
     );
   } else {
-    // Fallback gradient
+    // Meaningful fallback — gradient with pattern
+    const hue = Math.floor((pieceId / TOTAL_PIECES) * 30) + 5;
     const grad = ctx.createLinearGradient(0, 0, w, h);
-    const hue = (pieceId / TOTAL_PIECES) * 60 + 10;
-    grad.addColorStop(0, `hsl(${hue}, 70%, 60%)`);
-    grad.addColorStop(1, `hsl(${hue+20}, 60%, 50%)`);
+    grad.addColorStop(0, `hsl(${hue}, 75%, 65%)`);
+    grad.addColorStop(1, `hsl(${hue + 20}, 60%, 50%)`);
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
+
+    // Boba pearl decoration
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.beginPath();
+    ctx.arc(w * 0.5, h * 0.4, w * 0.22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.beginPath();
+    ctx.arc(w * 0.45, h * 0.35, w * 0.08, 0, Math.PI * 2);
+    ctx.fill();
   }
+
+  // Subtle inner border for piece definition
+  ctx.strokeStyle = 'rgba(49, 46, 41, 0.15)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
 
   return canvas;
 }
